@@ -1,0 +1,9 @@
+keystore:
+  password: "Mul3#2021"
+
+https:
+  port: "8082"
+
+anypoint:
+  host: "anypoint.mulesoft.com"
+  port: "443"

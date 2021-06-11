@@ -1,0 +1,7 @@
+{
+  "organizationName": "Test Org",
+  "callback": {
+    "slackUser": "slack.user",
+    "email": "email@example.co.uk"
+  }
+}

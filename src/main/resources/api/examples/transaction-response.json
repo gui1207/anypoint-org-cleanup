@@ -1,0 +1,23 @@
+{
+  "transactionId": "f4b647b9-82a9-4730-b03b-c6c54ab6d2c9",
+  "data": [
+    {
+      "module": "exchange",
+      "type": "asset-rest-api",
+      "id": "my-spec",
+      "status": "DELETED"
+    },
+    {
+      "module": "api-manager",
+      "type": "environment-sandbox",
+      "id": "b927e7d9-3ec3-45a1-8a70-dd26d0e73f7f",
+      "status": "DELETED"
+    },
+    {
+      "module": "access-management",
+      "type": "organization",
+      "id": "e51a4567-4708-4007-9197-617f02cb4b9e",
+      "status": "DELETED"
+    }
+  ]
+}

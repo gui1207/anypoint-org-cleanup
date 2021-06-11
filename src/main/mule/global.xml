@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:os="http://www.mulesoft.org/schema/mule/os"
+	xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd">
+	<http:listener-config name="org-clean-up-httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="${https.port}" protocol="HTTPS">
+            <tls:context>
+                <tls:key-store type="pkcs12" path="keystore.p12" alias="mule" keyPassword="${keystore.password}" password="${keystore.password}" />
+            </tls:context>
+        </http:listener-connection>
+    </http:listener-config>
+	<http:request-config name="HTTP_Request_configuration_Anypoint" doc:name="HTTP Request configuration" doc:id="fe762f07-a2f7-48ff-9dc9-6f39cee58739" responseTimeout="30000">
+		<http:request-connection protocol="HTTPS" host="${anypoint.host}" port="${anypoint.port}" />
+		<http:default-headers >
+			<http:default-header key='#["Authorization"]' value="#[vars.authorizationToken]" />
+		</http:default-headers>
+	</http:request-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="6c5d50ce-345e-4ce6-b3d9-ab0bfcd092a0" file="properties/${env}-properties.yaml" />
+	<global-property doc:name="Global Property" doc:id="99f4d6f0-de64-4e88-b172-1a07ccc37e8d" name="env" value="dev" />
+	<os:object-store name="Object_store_transaction" doc:name="Object store" doc:id="8587510d-b139-44c0-b978-0c7a85222b34" />
+</mule>

@@ -1,0 +1,74 @@
+#%RAML 1.0
+title: Clean Up Org
+
+version: v1
+protocols:
+  - HTTPS
+
+securitySchemes:
+  bearerToken:
+    type: Pass Through
+    describedBy:
+      headers:
+        Authorization:
+
+securedBy:
+    - bearerToken
+
+types:
+  deleteInfo: 
+    properties:
+      organizationName:
+      callback?:
+        properties:
+          slackUser?:
+          email?:
+  
+  transaction:
+    properties:
+      transactionId:
+
+  assetStatus:
+    properties:
+      module:
+      type:
+      id:
+      status:
+      message?:
+
+  transactionStatus:
+    type: transaction
+    properties:
+      data:
+        type: array
+        items:
+          type: assetStatus
+
+/organizations:
+  /{organizationId}:
+    uriParameters:
+      organizationId:
+        description: The Anypoint Platform OrganizationId
+    delete:
+      description: Clean up and delete an child organization in Anypoint Platform
+      body:
+        application/json:
+          type: deleteInfo
+          example: !include examples/delete-info.json
+      responses:
+        202:
+          body:
+            application/json:
+              type: transaction
+              example: !include examples/transaction.json
+
+/transactions/{transactionId}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: transactionStatus
+            example: !include examples/transaction-response.json
+          
+  

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:os="http://www.mulesoft.org/schema/mule/os" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:validation="http://www.mulesoft.org/schema/mule/validation"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd">
+	
+	<flow name="async-cleanup" doc:id="7bf1b132-2145-471b-9a8e-5f92e4f81240" >
+		<async doc:name="Async" doc:id="a8a79dc9-c7fc-467e-911f-606f21aaa90a" >
+			<flow-ref doc:name="Call cleanup-and-delelete-organization-flow" doc:id="bcd3b5ee-4fcf-4b37-a344-e0f0f770c29b" name="cleanup-and-delelete-organization-flow"/>
+		</async>
+		<ee:transform doc:name="Response" doc:id="dad5d821-c9f4-4a97-a081-dfa9f92c596d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	transactionId: correlationId
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="get-transaction-flow" doc:id="ae7d0324-68a5-4aef-9ac8-7bb506578c65" >
+		<os:retrieve doc:name="Retrieve" doc:id="5aa63b02-9fbf-4435-985b-ad3d9b6cd99f" key="#[vars.transactionId]" objectStore="Object_store_transaction"/>
+		<ee:transform doc:name="assetStatusList Response" doc:id="6460161d-00ea-4cf4-afc8-56ad86ff9739">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="cleanup-and-delelete-organization-flow" doc:id="e3d1f42d-db65-4f72-98a3-c1b81526c3d6" >
+		<ee:transform doc:name="Set variables" doc:id="dc881985-4787-4125-af0a-3501459878cc" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="assetStatusList" ><![CDATA[%dw 2.0
+output application/java
+---
+[]]]></ee:set-variable>
+				<ee:set-variable variableName="cleanUpInfo" ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-variable>
+				<ee:set-variable variableName="deleteInfo" ><![CDATA[%dw 2.0
+output application/java
+---
+payload]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<set-variable value="#[[]]" doc:name="Set assetStatusList" doc:id="909fedff-f124-480f-afbd-b24d1fd481e4" variableName="assetStatusList" />
+		<os:store doc:name="Store" doc:id="2530f24e-5ea4-4c33-8e39-c56dadd370b1" key="#[correlationId]" objectStore="Object_store_transaction" >
+			<os:value ><![CDATA[#[vars.assetStatusList]]]></os:value>
+		</os:store>
+		<flow-ref doc:name="Call validate-org-info-subflow" doc:id="9a59ae92-74ba-4022-86be-18f095af5145" name="validate-org-info-subflow"/>
+		<flow-ref doc:name="Call list-and-delete-apimanager-assets-subflow" doc:id="65624cbb-e3f9-445d-9c41-9c44fb10e254" name="list-and-delete-apimanager-assets-subflow"/>
+		<flow-ref doc:name="Call list-and-delete-exchange-assets-subflow" doc:id="f4ab92bc-2fe9-48c6-a1ff-9117c68f1a61" name="list-and-delete-exchange-assets-subflow"/>
+		<flow-ref doc:name="Call delete-org-subflow" doc:id="c5f5a58c-9ed4-409a-aa4d-0bec5d82dd0a" name="delete-org-subflow"/>
+		<os:store doc:name="Store" doc:id="21075f9d-fbaa-4b6a-ad51-91ae494bfd90" key="#[correlationId]" objectStore="Object_store_transaction">
+			<os:value><![CDATA[#[vars.assetStatusList]]]></os:value>
+		</os:store>
+		<logger level="INFO" doc:name="Logger" doc:id="cae916ba-e459-4aff-8314-129bec76579a" message='#["Org clean up finished!"]'/>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="81ea1b05-96f3-484f-92ab-f8c9cad22396" >
+				<ee:transform doc:name="Append assetStatus" doc:id="fce4aa63-8687-48fb-a556-7af84e956384" >
+					<ee:message />
+					<ee:variables >
+						<ee:set-variable variableName="assetStatusList" ><![CDATA[%dw 2.0
+output application/java
+---
+vars.assetStatusList + {
+	module: "org-cleanup-api",
+	"type": "internal-error",
+	id: correlationId,
+	status: "ERROR",
+	message: error.description
+}]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<os:store doc:name="Store" doc:id="609f8aab-6a74-4647-82bc-10822a2c3973" key="#[correlationId]" objectStore="Object_store_transaction" >
+					<os:value ><![CDATA[#[vars.assetStatusList]]]></os:value>
+				</os:store>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<sub-flow name="validate-org-info-subflow" doc:id="150507e0-0622-4664-a44e-4b2d7a114a38" >
+		<http:request method="GET" doc:name="Org Info" doc:id="dfd70002-1518-4f59-8f5b-34ee5e523713" config-ref="HTTP_Request_configuration_Anypoint" path="/accounts/api/organizations/{organizationId}">
+			<http:uri-params><![CDATA[#[output application/java
+---
+{
+	"organizationId" : vars.organizationId
+}]]]></http:uri-params>
+		</http:request>
+		<validation:is-false doc:name="Is not master org" doc:id="ebaf70dd-ba5c-48af-8994-a1ad7eb96caf" expression="#[payload.isMaster]" message="OrganizationId belongs to a master organization!" />
+		<validation:is-true doc:name="Org name doesn't match" doc:id="169bfcdf-6dd8-4de1-9b14-40e506cff6eb" expression="#[payload.name == vars.deleteInfo.organizationName]" message="Organization name doesn't match!" />
+	</sub-flow>
+	<sub-flow name="list-and-delete-apimanager-assets-subflow" doc:id="160bd516-413b-469e-ac55-722e114b02c5">
+		<http:request method="GET" doc:name="List environments" doc:id="c880e728-40eb-485e-b914-24c4fe2580eb" config-ref="HTTP_Request_configuration_Anypoint" path="/accounts/api/organizations/{organizationId}/environments">
+			<http:uri-params><![CDATA[#[output application/java
+---
+{
+	"organizationId" : vars.organizationId
+}]]]></http:uri-params>
+		</http:request>
+		<foreach doc:name="For Each" doc:id="87052dad-ee70-4a7e-a757-4710f45c7ece" collection="#[payload.data]">
+			<http:request method="DELETE" doc:name="Delete all apis" doc:id="7739835d-5570-4c0b-a99c-cc42087b3ba3" config-ref="HTTP_Request_configuration_Anypoint" path="/apimanager/xapi/v1/organizations/{organizationId}/environments/{environmentId}" targetValue="#[message]" target="deleteApisResponse">
+				<http:uri-params><![CDATA[#[output application/java
+---
+{
+	"environmentId" : payload.id,
+	"organizationId" : payload.organizationId
+}]]]></http:uri-params>
+				<http:response-validator>
+					<http:success-status-code-validator values="200..500" />
+				</http:response-validator>
+			</http:request>
+			<ee:transform doc:name="Append assetStatus" doc:id="2017281c-f587-499d-a568-f431b602f66a">
+				<ee:message>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="assetStatusList"><![CDATA[%dw 2.0
+output application/java
+---
+vars.assetStatusList + {
+	module: "api-manager",
+	"type": "environment-" ++ payload."type",
+	id: payload.id,
+	(if ( vars.deleteApisResponse.attributes.statusCode == 204 ) {
+		status: "DELETED"
+	}
+	 else {
+		status: "ERROR",
+		message: vars.deleteApisResponse.payload.message default ""
+	})
+}]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</foreach>
+	</sub-flow>
+	<sub-flow name="list-and-delete-exchange-assets-subflow" doc:id="ed532d6d-f2ba-4e21-b408-a973e9ebdd20" >
+		<http:request method="GET" doc:name="List organization assets" doc:id="bd68860e-6c15-4399-932d-4c3544e4edce" config-ref="HTTP_Request_configuration_Anypoint" path="/exchange/api/v2/assets/search">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"organizationId" : vars.organizationId
+}]]]></http:query-params>
+		</http:request>
+		<foreach doc:name="For Each" doc:id="9676a222-1794-4fa4-99e2-9987b210f831" >
+			<http:request method="DELETE" doc:name="Delete Exchange asset" doc:id="ba766af3-0fc2-4e9a-ba40-89dbba15fb74" config-ref="HTTP_Request_configuration_Anypoint" path="/exchange/api/v2/assets/{groupId}/{assetId}" target="deleteAssetResponse" targetValue="#[message]">
+				<http:headers ><![CDATA[#[output application/java
+---
+{
+	"X-Delete-Type" : "soft-delete"
+}]]]></http:headers>
+				<http:uri-params><![CDATA[#[output application/java
+---
+{
+	"groupId" : payload.groupId,
+	"assetId" : payload.assetId
+}]]]></http:uri-params>
+				<http:response-validator >
+					<http:success-status-code-validator values="200..500" />
+				</http:response-validator>
+			</http:request>
+			<ee:transform doc:name="Append assetStatus" doc:id="9bfe60b4-80da-490b-888e-b6f0b33681f9">
+							<ee:message>
+							</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="assetStatusList" ><![CDATA[%dw 2.0
+output application/java
+---
+vars.assetStatusList + {
+	module: "exchange",
+	"type": "asset-" ++ payload."type",
+	id: payload.assetId,
+	(if ( vars.deleteAssetResponse.attributes.statusCode == 204 ) {
+		status: "DELETED"
+	}
+	 else {
+		status: "ERROR",
+		message: vars.deleteAssetResponse.payload.message default ""
+	})
+}]]></ee:set-variable>
+				</ee:variables>
+						</ee:transform>
+		</foreach>
+	</sub-flow>
+	<sub-flow name="delete-org-subflow" doc:id="2da9563e-38b1-40f3-a3cc-00737b660493" >
+		<http:request method="DELETE" doc:name="Delete org" doc:id="6ade87bb-14f0-4c9a-931e-a593cda2b1f3" config-ref="HTTP_Request_configuration_Anypoint" path="/accounts/api/organizations/{organizationId}" target="deleteOrgResponse" targetValue="#[message]">
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"organizationId" : vars.organizationId
+}]]]></http:uri-params>
+			<http:response-validator >
+				<http:success-status-code-validator values="200..500" />
+			</http:response-validator>
+		</http:request>
+		<ee:transform doc:name="Append assetStatus" doc:id="0414055a-2600-4455-a4f4-4c66e26127eb" >
+			<ee:message />
+			<ee:variables >
+				<ee:set-variable variableName="assetStatusList" ><![CDATA[%dw 2.0
+output application/java
+---
+vars.assetStatusList + {
+	module: "access-management",
+	"type": "organzation",
+	id: vars.organizationId,
+	(if ( vars.deleteOrgResponse.attributes.statusCode == 200 ) {
+		status: "DELETED"
+	}
+	 else {
+		status: "ERROR",
+		message: vars.deleteOrgResponse.payload.message default ""
+	})
+}]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</sub-flow>
+</mule>

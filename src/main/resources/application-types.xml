@@ -1,0 +1,460 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="org-info" format="json">
+      <types:shape format="weave" example="examples/org-info.json"><![CDATA[%dw 2.0
+
+type org_info = {|
+  name: String, 
+  id: String, 
+  createdAt: String, 
+  updatedAt: String, 
+  ownerId: String, 
+  clientId: String, 
+  idprovider_id: String, 
+  isFederated: Boolean, 
+  parentOrganizationIds: Array<String>, 
+  subOrganizationIds: Array<Any>, 
+  tenantOrganizationIds: Array<Any>, 
+  mfaRequired: Null, 
+  isAutomaticAdminPromotionExempt: Boolean, 
+  domain: Null, 
+  isMaster: Boolean, 
+  properties: {|  |}, 
+  environments: Array<{|    id: String,     name: String,     organizationId: String,     isProduction: Boolean,     "type": String,     clientId: String  |}>, 
+  entitlements: {|
+    createEnvironments: Boolean, 
+    globalDeployment: Boolean, 
+    createSubOrgs: Boolean, 
+    hybrid: {| enabled: Boolean |}, 
+    hybridInsight: Boolean, 
+    hybridAutoDiscoverProperties: Boolean, 
+    vCoresProduction: {|
+      assigned: Number {"typeId": "int"}, 
+      reassigned: Number {"typeId": "int"}
+    |}, 
+    vCoresSandbox: {|
+      assigned: Number {"typeId": "int"}, 
+      reassigned: Number {"typeId": "int"}
+    |}, 
+    vCoresDesign: {|
+      assigned: Number {"typeId": "int"}, 
+      reassigned: Number {"typeId": "int"}
+    |}, 
+    staticIps: {|
+      assigned: Number {"typeId": "int"}, 
+      reassigned: Number {"typeId": "int"}
+    |}, 
+    vpcs: {|
+      assigned: Number {"typeId": "int"}, 
+      reassigned: Number {"typeId": "int"}
+    |}, 
+    vpns: {|
+      assigned: Number {"typeId": "int"}, 
+      reassigned: Number {"typeId": "int"}
+    |}, 
+    networkConnections: {|
+      assigned: Number {"typeId": "int"}, 
+      reassigned: Number {"typeId": "int"}
+    |}, 
+    workerLoggingOverride: {| enabled: Boolean |}, 
+    mqMessages: {|
+      base: Number {"typeId": "int"}, 
+      addOn: Number {"typeId": "int"}
+    |}, 
+    mqRequests: {|
+      base: Number {"typeId": "int"}, 
+      addOn: Number {"typeId": "int"}
+    |}, 
+    objectStoreRequestUnits: {|
+      base: Number {"typeId": "int"}, 
+      addOn: Number {"typeId": "int"}
+    |}, 
+    objectStoreKeys: {|
+      base: Number {"typeId": "int"}, 
+      addOn: Number {"typeId": "int"}
+    |}, 
+    mqAdvancedFeatures: {| enabled: Boolean |}, 
+    designCenter: {|
+      api: Boolean, 
+      mozart: Boolean
+    |}, 
+    partnersProduction: {| assigned: Number {"typeId": "int"} |}, 
+    partnersSandbox: {| assigned: Number {"typeId": "int"} |}, 
+    tradingPartnersProduction: {| assigned: Number {"typeId": "int"} |}, 
+    tradingPartnersSandbox: {| assigned: Number {"typeId": "int"} |}, 
+    loadBalancer: {|
+      assigned: Number {"typeId": "int"}, 
+      reassigned: Number {"typeId": "int"}
+    |}, 
+    apiMonitoring: {| schedules: Number {"typeId": "int"} |}, 
+    monitoringCenter: {|
+      productSKU: Number {"typeId": "int"}, 
+      rawStorageOverrideGB: Number {"typeId": "int"}
+    |}, 
+    apiQuery: {| enabled: Boolean |}, 
+    apiQueryC360: {| enabled: Boolean |}, 
+    angGovernance: {| level: Number {"typeId": "int"} |}, 
+    kpiDashboard: {| enabled: Boolean |}, 
+    pcf: Boolean, 
+    appViz: Boolean, 
+    runtimeFabric: Boolean, 
+    anypointSecurityTokenization: {| enabled: Boolean |}, 
+    anypointSecurityEdgePolicies: {| enabled: Boolean |}, 
+    runtimeFabricCloud: {| enabled: Boolean |}, 
+    messaging: {| assigned: Number {"typeId": "int"} |}, 
+    workerClouds: {|
+      assigned: Number {"typeId": "int"}, 
+      reassigned: Number {"typeId": "int"}
+    |}
+  |}, 
+  owner: {|
+    id: String, 
+    createdAt: String, 
+    updatedAt: String, 
+    organizationId: String, 
+    firstName: String, 
+    lastName: String, 
+    email: String, 
+    phoneNumber: String, 
+    username: String, 
+    idprovider_id: String, 
+    enabled: Boolean, 
+    deleted: Boolean, 
+    lastLogin: String, 
+    mfaVerificationExcluded: Boolean, 
+    mfaVerifiersConfigured: String, 
+    isFederated: Boolean, 
+    "type": String
+  |}
+|} {"example": "{\\\"name\\\":\\\"Test Org\\\",\\\"id\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"createdAt\\\":\\\"2021-06-07T16:13:23.095Z\\\",\\\"updatedAt\\\":\\\"2021-06-07T16:13:23.095Z\\\",\\\"ownerId\\\":\\\"d53f10e3-b066-4f1a-aefc-7a702de53593\\\",\\\"clientId\\\":\\\"96f71349d08b4acf84c97d5eaf605ffe\\\",\\\"idprovider_id\\\":\\\"mulesoft\\\",\\\"isFederated\\\":false,\\\"parentOrganizationIds\\\":[\\\"51144150-1eaf-406d-aea8-9869ca185036\\\"],\\\"subOrganizationIds\\\":[],\\\"tenantOrganizationIds\\\":[],\\\"mfaRequired\\\":null,\\\"isAutomaticAdminPromotionExempt\\\":false,\\\"domain\\\":null,\\\"isMaster\\\":false,\\\"properties\\\":{},\\\"environments\\\":[{\\\"id\\\":\\\"e30b418f-e0db-4d16-a7a3-f7c95f96a45e\\\",\\\"name\\\":\\\"Design\\\",\\\"organizationId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"isProduction\\\":false,\\\"type\\\":\\\"design\\\",\\\"clientId\\\":\\\"b53a996b3e2a4f01b4901c0a5d93c534\\\"},{\\\"id\\\":\\\"b8aee78e-997e-424f-b9a9-185081ff8006\\\",\\\"name\\\":\\\"Sandbox\\\",\\\"organizationId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"isProduction\\\":false,\\\"type\\\":\\\"sandbox\\\",\\\"clientId\\\":\\\"93e5515be98644feb76e3c22d369e740\\\"}],\\\"entitlements\\\":{\\\"createEnvironments\\\":true,\\\"globalDeployment\\\":false,\\\"createSubOrgs\\\":false,\\\"hybrid\\\":{\\\"enabled\\\":true},\\\"hybridInsight\\\":true,\\\"hybridAutoDiscoverProperties\\\":true,\\\"vCoresProduction\\\":{\\\"assigned\\\":0,\\\"reassigned\\\":0},\\\"vCoresSandbox\\\":{\\\"assigned\\\":0,\\\"reassigned\\\":0},\\\"vCoresDesign\\\":{\\\"assigned\\\":0,\\\"reassigned\\\":0},\\\"staticIps\\\":{\\\"assigned\\\":0,\\\"reassigned\\\":0},\\\"vpcs\\\":{\\\"assigned\\\":0,\\\"reassigned\\\":0},\\\"vpns\\\":{\\\"assigned\\\":0,\\\"reassigned\\\":0},\\\"networkConnections\\\":{\\\"assigned\\\":0,\\\"reassigned\\\":0},\\\"workerLoggingOverride\\\":{\\\"enabled\\\":false},\\\"mqMessages\\\":{\\\"base\\\":1000000,\\\"addOn\\\":0},\\\"mqRequests\\\":{\\\"base\\\":10000000,\\\"addOn\\\":0},\\\"objectStoreRequestUnits\\\":{\\\"base\\\":0,\\\"addOn\\\":0},\\\"objectStoreKeys\\\":{\\\"base\\\":0,\\\"addOn\\\":0},\\\"mqAdvancedFeatures\\\":{\\\"enabled\\\":true},\\\"designCenter\\\":{\\\"api\\\":true,\\\"mozart\\\":true},\\\"partnersProduction\\\":{\\\"assigned\\\":0},\\\"partnersSandbox\\\":{\\\"assigned\\\":0},\\\"tradingPartnersProduction\\\":{\\\"assigned\\\":0},\\\"tradingPartnersSandbox\\\":{\\\"assigned\\\":0},\\\"loadBalancer\\\":{\\\"assigned\\\":0,\\\"reassigned\\\":0},\\\"apiMonitoring\\\":{\\\"schedules\\\":5},\\\"monitoringCenter\\\":{\\\"productSKU\\\":0,\\\"rawStorageOverrideGB\\\":0},\\\"apiQuery\\\":{\\\"enabled\\\":false},\\\"apiQueryC360\\\":{\\\"enabled\\\":false},\\\"angGovernance\\\":{\\\"level\\\":-1},\\\"kpiDashboard\\\":{\\\"enabled\\\":false},\\\"pcf\\\":false,\\\"appViz\\\":false,\\\"runtimeFabric\\\":true,\\\"anypointSecurityTokenization\\\":{\\\"enabled\\\":true},\\\"anypointSecurityEdgePolicies\\\":{\\\"enabled\\\":true},\\\"runtimeFabricCloud\\\":{\\\"enabled\\\":false},\\\"messaging\\\":{\\\"assigned\\\":1},\\\"workerClouds\\\":{\\\"assigned\\\":1,\\\"reassigned\\\":0}},\\\"owner\\\":{\\\"id\\\":\\\"d53f10e3-b066-4f1a-aefc-7a702de53593\\\",\\\"createdAt\\\":\\\"2019-10-26T19:40:08.473Z\\\",\\\"updatedAt\\\":\\\"2021-06-07T20:31:47.352Z\\\",\\\"organizationId\\\":\\\"51144150-1eaf-406d-aea8-9869ca185036\\\",\\\"firstName\\\":\\\"Guilherme\\\",\\\"lastName\\\":\\\"Pereira\\\",\\\"email\\\":\\\"gui1207@gmail.com\\\",\\\"phoneNumber\\\":\\\"11967167407\\\",\\\"username\\\":\\\"guilherme_pereira\\\",\\\"idprovider_id\\\":\\\"mulesoft\\\",\\\"enabled\\\":true,\\\"deleted\\\":false,\\\"lastLogin\\\":\\\"2021-06-07T20:31:00.000Z\\\",\\\"mfaVerificationExcluded\\\":false,\\\"mfaVerifiersConfigured\\\":\\\"false\\\",\\\"isFederated\\\":false,\\\"type\\\":\\\"host\\\"}}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="org-assets" format="json">
+      <types:shape format="weave" example="examples/org-assets.json"><![CDATA[%dw 2.0
+
+type org_assets = Array<{|  organizationId: String,   groupId: String,   assetId: String,   version: String,   minorVersion: String,   versionGroup: String,   description: String,   isPublic: Boolean,   name: String,   "type": String,   status: String,   createdAt: String,   createdById: String|}> {"example": "[{\\\"organizationId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"spec1\\\",\\\"version\\\":\\\"1.0.1\\\",\\\"minorVersion\\\":\\\"1.0\\\",\\\"versionGroup\\\":\\\"v1\\\",\\\"description\\\":\\\"\\\",\\\"isPublic\\\":false,\\\"name\\\":\\\"Spec1\\\",\\\"type\\\":\\\"rest-api\\\",\\\"status\\\":\\\"published\\\",\\\"createdAt\\\":\\\"2021-06-07T16:33:50.355Z\\\",\\\"createdById\\\":\\\"d53f10e3-b066-4f1a-aefc-7a702de53593\\\"},{\\\"organizationId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"spec2\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"minorVersion\\\":\\\"1.0\\\",\\\"versionGroup\\\":\\\"v1\\\",\\\"description\\\":\\\"\\\",\\\"isPublic\\\":false,\\\"name\\\":\\\"Spec2\\\",\\\"type\\\":\\\"rest-api\\\",\\\"status\\\":\\\"published\\\",\\\"createdAt\\\":\\\"2021-06-07T16:23:40.912Z\\\",\\\"createdById\\\":\\\"d53f10e3-b066-4f1a-aefc-7a702de53593\\\"},{\\\"organizationId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"lib\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"minorVersion\\\":\\\"1.0\\\",\\\"versionGroup\\\":\\\"1.0.0\\\",\\\"description\\\":\\\"\\\",\\\"isPublic\\\":false,\\\"name\\\":\\\"Lib\\\",\\\"type\\\":\\\"raml-fragment\\\",\\\"status\\\":\\\"published\\\",\\\"createdAt\\\":\\\"2021-06-07T16:16:21.059Z\\\",\\\"createdById\\\":\\\"d53f10e3-b066-4f1a-aefc-7a702de53593\\\"}]"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="asset-status" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: object
+properties:
+    module:
+      type: string
+    type:
+      type: string
+    id:
+      type: string
+    status:
+      type: string
+    message?:
+       type: string
+ ]]></types:shape>
+    </types:type>
+    <types:type name="asset-info" format="json">
+      <types:shape format="weave" example="examples/asset-info.json"><![CDATA[%dw 2.0
+
+type asset_info = {|
+  groupId: String, 
+  assetId: String, 
+  version: String, 
+  minorVersion: String, 
+  description: String, 
+  versionGroup: String, 
+  isPublic: Boolean, 
+  name: String, 
+  "type": String, 
+  isSnapshot: Boolean, 
+  status: String, 
+  attributes: Array<{|    value: String,     key: String  |}>, 
+  externalFile: {| url: Null |}, 
+  createdDate: String, 
+  updatedDate: String, 
+  originalFormat: String, 
+  originalFormatVersion: String, 
+  minMuleVersion: Null, 
+  isMozartTemplate: Boolean, 
+  labels: Array<Any>, 
+  categories: Array<Any>, 
+  customFields: Array<Any>, 
+  mule3ConnectorMetadata: {|
+    fullVersion: Null, 
+    featureId: Null
+  |}, 
+  files: Array<{|    classifier: String,     packaging: String,     downloadURL: String,     externalLink: String,     md5: String,     sha1: String,     createdDate: String,     mainFile: String,     isGenerated: Boolean  |}>, 
+  rating: Number {"typeId": "int"}, 
+  numberOfRates: Number {"typeId": "int"}, 
+  createdBy: {|
+    id: String, 
+    userName: String, 
+    firstName: String, 
+    lastName: String
+  |}, 
+  instances: Array<{|    versionGroup: String,     organizationId: String,     id: String,     groupId: String,     assetId: String,     version: String,     minorVersion: String,     productAPIVersion: String,     environmentId: Null,     providerId: Null,     endpointUri: String,     name: String,     isPublic: Boolean,     "type": String,     deprecated: Null,     fullname: String,     assetName: String,     environmentName: String,     environmentOrganizationName: String  |}>, 
+  dependencies: Array<{|    organization: {|      id: String,       name: String    |},     groupId: String,     assetId: String,     version: String,     minorVersion: String,     versionGroup: String,     name: String,     "type": String,     permissions: Array<String>
+  |}>, 
+  generated: Array<{|    groupId: String,     assetId: String,     version: String,     versionGroup: String,     name: String,     "type": String,     minMuleVersion: String,     files: Array<{|      classifier: String,       packaging: String,       downloadURL: String,       externalLink: String,       md5: String,       sha1: String,       createdDate: String,       mainFile: Null,       isGenerated: Boolean    |}>
+  |}>, 
+  otherVersions: Array<Any>, 
+  id: String, 
+  icon: Null, 
+  createdAt: String, 
+  modifiedAt: String, 
+  organization: {|
+    id: String, 
+    name: String, 
+    parentOrganizationIds: Array<String>, 
+    subOrganizationIds: Array<Any>, 
+    tenantOrganizationIds: Array<Any>, 
+    isMaster: Boolean, 
+    domain: String, 
+    isMulesoftOrganization: Boolean
+  |}, 
+  permissions: Array<String>, 
+  versions: Array<{|    groupId: String,     assetId: String,     version: String,     minorVersion: String,     description: String,     versionGroup: String,     isPublic: Boolean,     name: String,     "type": String,     isSnapshot: Boolean,     status: String,     attributes: Array<{|      value: String,       key: String    |}>, 
+    externalFile: {| url: Null |}, 
+    createdDate: String, 
+    updatedDate: String, 
+    originalFormat: String, 
+    originalFormatVersion: String, 
+    minMuleVersion: Null, 
+    isMozartTemplate: Boolean, 
+    labels: Array<Any>, 
+    categories: Array<Any>, 
+    customFields: Array<Any>, 
+    mule3ConnectorMetadata: {|
+      fullVersion: Null, 
+      featureId: Null
+    |}, 
+    files: Array<{|      classifier: String,       packaging: String,       downloadURL: String,       externalLink: String,       md5: String,       sha1: String,       createdDate: String,       mainFile: String,       isGenerated: Boolean    |}>, 
+    rating: Number {"typeId": "int"}, 
+    numberOfRates: Number {"typeId": "int"}, 
+    createdBy: {|
+      id: String, 
+      userName: String, 
+      firstName: String, 
+      lastName: String
+    |}, 
+    instances: Array<{|      versionGroup: String,       organizationId: String,       id: String,       groupId: String,       assetId: String,       version: String,       minorVersion: String,       productAPIVersion: String,       environmentId: Null,       providerId: Null,       endpointUri: String,       name: String,       isPublic: Boolean,       "type": String,       deprecated: Null,       fullname: String,       assetName: String,       environmentName: String,       environmentOrganizationName: String    |}>, 
+    dependencies: Array<{|      organization: {|        id: String,         name: String      |},       groupId: String,       assetId: String,       version: String,       minorVersion: String,       versionGroup: String,       name: String,       "type": String,       permissions: Array<String>
+    |}>, 
+    generated: Array<{|      groupId: String,       assetId: String,       version: String,       versionGroup: String,       name: String,       "type": String,       minMuleVersion: String,       files: Array<{|        classifier: String,         packaging: String,         downloadURL: String,         externalLink: String,         md5: String,         sha1: String,         createdDate: String,         mainFile: Null,         isGenerated: Boolean      |}>
+    |}>, 
+    otherVersions: Array<Any>, 
+    id: String, 
+    icon: Null, 
+    createdAt: String, 
+    modifiedAt: String, 
+    organization: {|
+      id: String, 
+      name: String, 
+      parentOrganizationIds: Array<String>, 
+      subOrganizationIds: Array<Any>, 
+      tenantOrganizationIds: Array<Any>, 
+      isMaster: Boolean, 
+      domain: String, 
+      isMulesoftOrganization: Boolean
+    |}, 
+    permissions: Array<String>
+  |}>
+|} {"example": "{\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"spec2\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"minorVersion\\\":\\\"1.0\\\",\\\"description\\\":\\\"\\\",\\\"versionGroup\\\":\\\"v1\\\",\\\"isPublic\\\":false,\\\"name\\\":\\\"Spec2\\\",\\\"type\\\":\\\"rest-api\\\",\\\"isSnapshot\\\":false,\\\"status\\\":\\\"published\\\",\\\"attributes\\\":[{\\\"value\\\":\\\"v1\\\",\\\"key\\\":\\\"api-version\\\"},{\\\"value\\\":\\\"f82c31ad-4b0d-4bf6-b13e-ed8cea9d9762\\\",\\\"key\\\":\\\"project-id\\\"},{\\\"value\\\":\\\"master\\\",\\\"key\\\":\\\"branch-id\\\"},{\\\"value\\\":\\\"e3efd49d075679cb088481b096644d9b32e305b5\\\",\\\"key\\\":\\\"commit-id\\\"},{\\\"value\\\":\\\"1.0\\\",\\\"key\\\":\\\"original-format-version\\\"},{\\\"value\\\":\\\"raml\\\",\\\"key\\\":null},{\\\"value\\\":\\\"oas\\\",\\\"key\\\":null},{\\\"value\\\":\\\"rest\\\",\\\"key\\\":null},{\\\"value\\\":\\\"api\\\",\\\"key\\\":null},{\\\"value\\\":\\\"raml\\\",\\\"key\\\":\\\"original-format\\\"},{\\\"value\\\":\\\"v1\\\",\\\"key\\\":\\\"product-api-version\\\"}],\\\"externalFile\\\":{\\\"url\\\":null},\\\"createdDate\\\":\\\"2021-06-07T16:23:40.912Z\\\",\\\"updatedDate\\\":\\\"2021-06-07T16:23:39.965Z\\\",\\\"originalFormat\\\":\\\"raml\\\",\\\"originalFormatVersion\\\":\\\"1.0\\\",\\\"minMuleVersion\\\":null,\\\"isMozartTemplate\\\":false,\\\"labels\\\":[],\\\"categories\\\":[],\\\"customFields\\\":[],\\\"mule3ConnectorMetadata\\\":{\\\"fullVersion\\\":null,\\\"featureId\\\":null},\\\"files\\\":[{\\\"classifier\\\":\\\"fat-raml\\\",\\\"packaging\\\":\\\"zip\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/spec2\\/1.0.0\\/fat-raml\\/zip\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/7bf5553475f3d62c8324c6f09448bfd83e4350dbc169fa9a82d97a4260948f29.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=40e11d644d167989a82f8e53cfa751733ed3ca3d48b88dae6249c876a8ec68fa&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dspec2-1.0.0-raml.zip\\\",\\\"md5\\\":\\\"26b15f029dec61801ac91e3d27d8c285\\\",\\\"sha1\\\":\\\"63b12591986c7e5c3d02716a70f47e48eb473261\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:39.965Z\\\",\\\"mainFile\\\":\\\"spec2.raml\\\",\\\"isGenerated\\\":false},{\\\"classifier\\\":\\\"raml\\\",\\\"packaging\\\":\\\"zip\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/spec2\\/1.0.0\\/raml\\/zip\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/003e0a5aea87cf332228a13080cdc3a6448191b90812332998bcc54b5ad494b2.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=30d22a03e986c1ff5864639f38a6fbac5ad0a53b87acdc4f1bcabcfc548d0679&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dspec2-1.0.0-raml.zip\\\",\\\"md5\\\":\\\"98f26dc41f6c30f13bffe4c483951688\\\",\\\"sha1\\\":\\\"5125ec81ebead6403ce594656473774241ac7117\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:39.965Z\\\",\\\"mainFile\\\":\\\"spec2.raml\\\",\\\"isGenerated\\\":false},{\\\"classifier\\\":null,\\\"packaging\\\":\\\"pom\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/spec2\\/1.0.0\\/pom\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/31f4265be2e059a6f0d9f6ea8a1172b5d5be7382a54c440d8294546c2b87e8be.pom?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=9f3b2227c1d6bf283dc9e30bab623e0ba589d525b0208250c3218ef6df983f8d&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dspec2-1.0.0.pom\\\",\\\"md5\\\":\\\"8e1651dc534f3015fc29d6640c3e9cf7\\\",\\\"sha1\\\":\\\"3d42a53f4b967dfd74aa6ff150ea31aa49e2d8d2\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:39.965Z\\\",\\\"mainFile\\\":null,\\\"isGenerated\\\":false},{\\\"classifier\\\":\\\"fat-oas\\\",\\\"packaging\\\":\\\"zip\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/spec2\\/1.0.0\\/fat-oas\\/zip\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/7cc61554b13d5958061fd72195830529a92e519cea53156dc2e15d10ffc4230a.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=66817dd80a8f5d94ca31639347d28fc8f6b2d574a21fc423b8c92353104fe152&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dspec2-1.0.0-fat-oas.zip\\\",\\\"md5\\\":\\\"6a42fde92ecb9e0375747c56dff22c8e\\\",\\\"sha1\\\":\\\"a3089e689b9d0b43d59074368be095b752a5a3a0\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:43.870Z\\\",\\\"mainFile\\\":\\\"api.json\\\",\\\"isGenerated\\\":true},{\\\"classifier\\\":\\\"oas\\\",\\\"packaging\\\":\\\"zip\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/spec2\\/1.0.0\\/oas\\/zip\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/f3f8b4f859bac1b39253b2feea4538966642606302f8deeca836d05b689334ab.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=af0ab89626273eece75e2a5476db29abece65d0138f715244cc992b724f72990&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dspec2-1.0.0-oas.zip\\\",\\\"md5\\\":\\\"6a42fde92ecb9e0375747c56dff22c8e\\\",\\\"sha1\\\":\\\"a3089e689b9d0b43d59074368be095b752a5a3a0\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:44.076Z\\\",\\\"mainFile\\\":\\\"api.json\\\",\\\"isGenerated\\\":true}],\\\"rating\\\":0,\\\"numberOfRates\\\":0,\\\"createdBy\\\":{\\\"id\\\":\\\"d53f10e3-b066-4f1a-aefc-7a702de53593\\\",\\\"userName\\\":\\\"guilherme_pereira\\\",\\\"firstName\\\":\\\"Guilherme\\\",\\\"lastName\\\":\\\"Pereira\\\"},\\\"instances\\\":[{\\\"versionGroup\\\":\\\"v1\\\",\\\"organizationId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"id\\\":\\\"mocking-service\\\",\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"spec2\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"minorVersion\\\":\\\"1.0\\\",\\\"productAPIVersion\\\":\\\"v1\\\",\\\"environmentId\\\":null,\\\"providerId\\\":null,\\\"endpointUri\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/mocking\\/api\\/v1\\/sources\\/exchange\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/spec2\\/1.0.0\\/m\\\",\\\"name\\\":\\\"Mocking Service\\\",\\\"isPublic\\\":true,\\\"type\\\":\\\"mocked\\\",\\\"deprecated\\\":null,\\\"fullname\\\":\\\"Spec2 - Mocking Service\\\",\\\"assetName\\\":\\\"Spec2\\\"},{\\\"versionGroup\\\":\\\"v1\\\",\\\"organizationId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"id\\\":\\\"16943600\\\",\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"spec2\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"minorVersion\\\":\\\"1.0\\\",\\\"productAPIVersion\\\":\\\"v1\\\",\\\"environmentId\\\":\\\"b8aee78e-997e-424f-b9a9-185081ff8006\\\",\\\"providerId\\\":null,\\\"endpointUri\\\":null,\\\"name\\\":\\\"v1:16943600\\\",\\\"isPublic\\\":false,\\\"type\\\":\\\"managed\\\",\\\"deprecated\\\":false,\\\"fullname\\\":\\\"Spec2 - Sandbox - v1:16943600\\\",\\\"environmentName\\\":\\\"Sandbox\\\",\\\"environmentOrganizationName\\\":\\\"Test Org\\\",\\\"assetName\\\":\\\"Spec2\\\"}],\\\"dependencies\\\":[{\\\"organization\\\":{\\\"id\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"name\\\":\\\"Test Org\\\"},\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"lib\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"minorVersion\\\":\\\"1.0\\\",\\\"versionGroup\\\":\\\"1.0.0\\\",\\\"name\\\":\\\"Lib\\\",\\\"type\\\":\\\"raml-fragment\\\",\\\"permissions\\\":[\\\"view\\\"]}],\\\"generated\\\":[{\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"mule-plugin-spec2\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"versionGroup\\\":\\\"1.0.0\\\",\\\"name\\\":\\\"Spec2\\\",\\\"type\\\":\\\"extension\\\",\\\"minMuleVersion\\\":\\\"4.1.1\\\",\\\"files\\\":[{\\\"classifier\\\":\\\"mule-plugin\\\",\\\"packaging\\\":\\\"jar\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/mule-plugin-spec2\\/1.0.0\\/mule-plugin\\/jar\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/64fa4811786fecb840d01861c3093ca1e9287b543283a2cf637cc16e05d0560a.jar?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=8fee78607a4fafe99146ec26527861d60b12a6b15006dda884f7d6cc9ea69392&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dmule-plugin-spec2-1.0.0-mule-plugin.jar\\\",\\\"md5\\\":\\\"2eeaf77e7262e1228a9fb6da905e71ef\\\",\\\"sha1\\\":\\\"bbe165391297920d3ce1284ebf6b86eff53ac6f7\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:42.963Z\\\",\\\"mainFile\\\":null,\\\"isGenerated\\\":false},{\\\"classifier\\\":\\\"icon\\\",\\\"packaging\\\":\\\"svg\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/mule-plugin-spec2\\/1.0.0\\/icon\\/svg\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/940e920e6bef21a5fe162844269e31f41a3e702b81d76ff662831fd365e978b0.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=a66f99a11d35454782dec310b64e7853f02e43da4ef76955cae57c93ae840284&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dmule-plugin-spec2-1.0.0-icon.svg\\\",\\\"md5\\\":\\\"4e66d7d9944fae99cd10d802a9c02207\\\",\\\"sha1\\\":\\\"00b2b3da2a1a886eeefc4d5fa5d8f049cef4e7e8\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:43.037Z\\\",\\\"mainFile\\\":null,\\\"isGenerated\\\":false},{\\\"classifier\\\":null,\\\"packaging\\\":\\\"pom\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/mule-plugin-spec2\\/1.0.0\\/pom\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/c58df4a1b8b0ffa5507a70e00009e66a7d64fdb25d049173a9387ad4575e32fb.pom?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=e24fd92e42735a07ed1d6ac6d2cec8d3945bdcf29b58a90c27ffb7abdb719220&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dmule-plugin-spec2-1.0.0.pom\\\",\\\"md5\\\":\\\"f96bbb907b26f4d434a0e74d18d401f3\\\",\\\"sha1\\\":\\\"1462bbfa94e1412e71ff245274d0be02d95eb89b\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:43.658Z\\\",\\\"mainFile\\\":null,\\\"isGenerated\\\":false}]},{\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"mule-module-spec2\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"versionGroup\\\":\\\"1.0.0\\\",\\\"name\\\":\\\"Spec2 Connector\\\",\\\"type\\\":\\\"connector\\\",\\\"minMuleVersion\\\":\\\"3.6.0\\\",\\\"files\\\":[{\\\"classifier\\\":null,\\\"packaging\\\":\\\"jar\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/mule-module-spec2\\/1.0.0\\/jar\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/2d6054576c28531cb02552ff33e2ae12e92a5155ec8bf3ccfed3603549a898ef.jar?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=e5bf28af7ddab237d6642fbe76eaf1e4696fa21c84ca1f4633da05d57c387151&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dmule-module-spec2-1.0.0.jar\\\",\\\"md5\\\":\\\"9431bcd36405350c4cf6e0fb1561ddd7\\\",\\\"sha1\\\":\\\"18ef9115b33f92b5047fcb9166afb806b02a7901\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:55.122Z\\\",\\\"mainFile\\\":null,\\\"isGenerated\\\":false},{\\\"classifier\\\":null,\\\"packaging\\\":\\\"pom\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/mule-module-spec2\\/1.0.0\\/pom\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/6e9ed5562e6b2adb34dc3368dc6d272bfba049649bab58ac07b6d50176e81cab.pom?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=eb5828744dd468ead594b8a84526f14274bd38d3e9874cd396f9ac8fd7027cdf&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dmule-module-spec2-1.0.0.pom\\\",\\\"md5\\\":\\\"0295b5a5aed8649ae198c2846882fcc5\\\",\\\"sha1\\\":\\\"f5c3fd6f0ebc7058855efb535810db92687c2719\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:55.507Z\\\",\\\"mainFile\\\":null,\\\"isGenerated\\\":false},{\\\"classifier\\\":\\\"studio-plugin\\\",\\\"packaging\\\":\\\"zip\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/mule-module-spec2\\/1.0.0\\/studio-plugin\\/zip\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/f3fec4ff3809994d2db1f682357bb9eef4c4deb98c5bc96c665092ace826dcba.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=09bcff597a63317a81dca79dd84f259b127193a9bb064bbefe7cfaa6b17e254a&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dmule-module-spec2-1.0.0-studio-plugin.zip\\\",\\\"md5\\\":\\\"2dea2fbe056a81d3c8d780719ec5388b\\\",\\\"sha1\\\":\\\"9543f54d4eeb7cb99720c2d20253a9f46fab5d92\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:57.012Z\\\",\\\"mainFile\\\":null,\\\"isGenerated\\\":false}]}],\\\"otherVersions\\\":[],\\\"id\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\/spec2\\/1.0.0\\\",\\\"icon\\\":null,\\\"createdAt\\\":\\\"2021-06-07T16:23:40.912Z\\\",\\\"modifiedAt\\\":\\\"2021-06-07T16:23:39.965Z\\\",\\\"organization\\\":{\\\"id\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"name\\\":\\\"Test Org\\\",\\\"parentOrganizationIds\\\":[\\\"51144150-1eaf-406d-aea8-9869ca185036\\\"],\\\"subOrganizationIds\\\":[],\\\"tenantOrganizationIds\\\":[],\\\"isMaster\\\":false,\\\"domain\\\":\\\"bolt-apis\\\",\\\"isMulesoftOrganization\\\":false},\\\"permissions\\\":[\\\"admin\\\",\\\"edit\\\"],\\\"versions\\\":[{\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"spec2\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"minorVersion\\\":\\\"1.0\\\",\\\"description\\\":\\\"\\\",\\\"versionGroup\\\":\\\"v1\\\",\\\"isPublic\\\":false,\\\"name\\\":\\\"Spec2\\\",\\\"type\\\":\\\"rest-api\\\",\\\"isSnapshot\\\":false,\\\"status\\\":\\\"published\\\",\\\"attributes\\\":[{\\\"value\\\":\\\"v1\\\",\\\"key\\\":\\\"api-version\\\"},{\\\"value\\\":\\\"f82c31ad-4b0d-4bf6-b13e-ed8cea9d9762\\\",\\\"key\\\":\\\"project-id\\\"},{\\\"value\\\":\\\"master\\\",\\\"key\\\":\\\"branch-id\\\"},{\\\"value\\\":\\\"e3efd49d075679cb088481b096644d9b32e305b5\\\",\\\"key\\\":\\\"commit-id\\\"},{\\\"value\\\":\\\"1.0\\\",\\\"key\\\":\\\"original-format-version\\\"},{\\\"value\\\":\\\"raml\\\",\\\"key\\\":null},{\\\"value\\\":\\\"oas\\\",\\\"key\\\":null},{\\\"value\\\":\\\"rest\\\",\\\"key\\\":null},{\\\"value\\\":\\\"api\\\",\\\"key\\\":null},{\\\"value\\\":\\\"raml\\\",\\\"key\\\":\\\"original-format\\\"},{\\\"value\\\":\\\"v1\\\",\\\"key\\\":\\\"product-api-version\\\"}],\\\"externalFile\\\":{\\\"url\\\":null},\\\"createdDate\\\":\\\"2021-06-07T16:23:40.912Z\\\",\\\"updatedDate\\\":\\\"2021-06-07T16:23:39.965Z\\\",\\\"originalFormat\\\":\\\"raml\\\",\\\"originalFormatVersion\\\":\\\"1.0\\\",\\\"minMuleVersion\\\":null,\\\"isMozartTemplate\\\":false,\\\"labels\\\":[],\\\"categories\\\":[],\\\"customFields\\\":[],\\\"mule3ConnectorMetadata\\\":{\\\"fullVersion\\\":null,\\\"featureId\\\":null},\\\"files\\\":[{\\\"classifier\\\":\\\"fat-raml\\\",\\\"packaging\\\":\\\"zip\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/spec2\\/1.0.0\\/fat-raml\\/zip\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/7bf5553475f3d62c8324c6f09448bfd83e4350dbc169fa9a82d97a4260948f29.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=40e11d644d167989a82f8e53cfa751733ed3ca3d48b88dae6249c876a8ec68fa&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dspec2-1.0.0-raml.zip\\\",\\\"md5\\\":\\\"26b15f029dec61801ac91e3d27d8c285\\\",\\\"sha1\\\":\\\"63b12591986c7e5c3d02716a70f47e48eb473261\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:39.965Z\\\",\\\"mainFile\\\":\\\"spec2.raml\\\",\\\"isGenerated\\\":false},{\\\"classifier\\\":\\\"raml\\\",\\\"packaging\\\":\\\"zip\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/spec2\\/1.0.0\\/raml\\/zip\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/003e0a5aea87cf332228a13080cdc3a6448191b90812332998bcc54b5ad494b2.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=30d22a03e986c1ff5864639f38a6fbac5ad0a53b87acdc4f1bcabcfc548d0679&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dspec2-1.0.0-raml.zip\\\",\\\"md5\\\":\\\"98f26dc41f6c30f13bffe4c483951688\\\",\\\"sha1\\\":\\\"5125ec81ebead6403ce594656473774241ac7117\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:39.965Z\\\",\\\"mainFile\\\":\\\"spec2.raml\\\",\\\"isGenerated\\\":false},{\\\"classifier\\\":null,\\\"packaging\\\":\\\"pom\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/spec2\\/1.0.0\\/pom\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/31f4265be2e059a6f0d9f6ea8a1172b5d5be7382a54c440d8294546c2b87e8be.pom?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=9f3b2227c1d6bf283dc9e30bab623e0ba589d525b0208250c3218ef6df983f8d&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dspec2-1.0.0.pom\\\",\\\"md5\\\":\\\"8e1651dc534f3015fc29d6640c3e9cf7\\\",\\\"sha1\\\":\\\"3d42a53f4b967dfd74aa6ff150ea31aa49e2d8d2\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:39.965Z\\\",\\\"mainFile\\\":null,\\\"isGenerated\\\":false},{\\\"classifier\\\":\\\"fat-oas\\\",\\\"packaging\\\":\\\"zip\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/spec2\\/1.0.0\\/fat-oas\\/zip\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/7cc61554b13d5958061fd72195830529a92e519cea53156dc2e15d10ffc4230a.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=66817dd80a8f5d94ca31639347d28fc8f6b2d574a21fc423b8c92353104fe152&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dspec2-1.0.0-fat-oas.zip\\\",\\\"md5\\\":\\\"6a42fde92ecb9e0375747c56dff22c8e\\\",\\\"sha1\\\":\\\"a3089e689b9d0b43d59074368be095b752a5a3a0\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:43.870Z\\\",\\\"mainFile\\\":\\\"api.json\\\",\\\"isGenerated\\\":true},{\\\"classifier\\\":\\\"oas\\\",\\\"packaging\\\":\\\"zip\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/spec2\\/1.0.0\\/oas\\/zip\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/f3f8b4f859bac1b39253b2feea4538966642606302f8deeca836d05b689334ab.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=af0ab89626273eece75e2a5476db29abece65d0138f715244cc992b724f72990&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dspec2-1.0.0-oas.zip\\\",\\\"md5\\\":\\\"6a42fde92ecb9e0375747c56dff22c8e\\\",\\\"sha1\\\":\\\"a3089e689b9d0b43d59074368be095b752a5a3a0\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:44.076Z\\\",\\\"mainFile\\\":\\\"api.json\\\",\\\"isGenerated\\\":true}],\\\"rating\\\":0,\\\"numberOfRates\\\":0,\\\"createdBy\\\":{\\\"id\\\":\\\"d53f10e3-b066-4f1a-aefc-7a702de53593\\\",\\\"userName\\\":\\\"guilherme_pereira\\\",\\\"firstName\\\":\\\"Guilherme\\\",\\\"lastName\\\":\\\"Pereira\\\"},\\\"instances\\\":[{\\\"versionGroup\\\":\\\"v1\\\",\\\"organizationId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"id\\\":\\\"mocking-service\\\",\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"spec2\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"minorVersion\\\":\\\"1.0\\\",\\\"productAPIVersion\\\":\\\"v1\\\",\\\"environmentId\\\":null,\\\"providerId\\\":null,\\\"endpointUri\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/mocking\\/api\\/v1\\/sources\\/exchange\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/spec2\\/1.0.0\\/m\\\",\\\"name\\\":\\\"Mocking Service\\\",\\\"isPublic\\\":true,\\\"type\\\":\\\"mocked\\\",\\\"deprecated\\\":null,\\\"fullname\\\":\\\"Spec2 - Mocking Service\\\",\\\"assetName\\\":\\\"Spec2\\\"},{\\\"versionGroup\\\":\\\"v1\\\",\\\"organizationId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"id\\\":\\\"16943600\\\",\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"spec2\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"minorVersion\\\":\\\"1.0\\\",\\\"productAPIVersion\\\":\\\"v1\\\",\\\"environmentId\\\":\\\"b8aee78e-997e-424f-b9a9-185081ff8006\\\",\\\"providerId\\\":null,\\\"endpointUri\\\":null,\\\"name\\\":\\\"v1:16943600\\\",\\\"isPublic\\\":false,\\\"type\\\":\\\"managed\\\",\\\"deprecated\\\":false,\\\"fullname\\\":\\\"Spec2 - Sandbox - v1:16943600\\\",\\\"environmentName\\\":\\\"Sandbox\\\",\\\"environmentOrganizationName\\\":\\\"Test Org\\\",\\\"assetName\\\":\\\"Spec2\\\"}],\\\"dependencies\\\":[{\\\"organization\\\":{\\\"id\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"name\\\":\\\"Test Org\\\"},\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"lib\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"minorVersion\\\":\\\"1.0\\\",\\\"versionGroup\\\":\\\"1.0.0\\\",\\\"name\\\":\\\"Lib\\\",\\\"type\\\":\\\"raml-fragment\\\",\\\"permissions\\\":[\\\"view\\\"]}],\\\"generated\\\":[{\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"mule-plugin-spec2\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"versionGroup\\\":\\\"1.0.0\\\",\\\"name\\\":\\\"Spec2\\\",\\\"type\\\":\\\"extension\\\",\\\"minMuleVersion\\\":\\\"4.1.1\\\",\\\"files\\\":[{\\\"classifier\\\":\\\"mule-plugin\\\",\\\"packaging\\\":\\\"jar\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/mule-plugin-spec2\\/1.0.0\\/mule-plugin\\/jar\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/64fa4811786fecb840d01861c3093ca1e9287b543283a2cf637cc16e05d0560a.jar?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=8fee78607a4fafe99146ec26527861d60b12a6b15006dda884f7d6cc9ea69392&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dmule-plugin-spec2-1.0.0-mule-plugin.jar\\\",\\\"md5\\\":\\\"2eeaf77e7262e1228a9fb6da905e71ef\\\",\\\"sha1\\\":\\\"bbe165391297920d3ce1284ebf6b86eff53ac6f7\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:42.963Z\\\",\\\"mainFile\\\":null,\\\"isGenerated\\\":false},{\\\"classifier\\\":\\\"icon\\\",\\\"packaging\\\":\\\"svg\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/mule-plugin-spec2\\/1.0.0\\/icon\\/svg\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/940e920e6bef21a5fe162844269e31f41a3e702b81d76ff662831fd365e978b0.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=a66f99a11d35454782dec310b64e7853f02e43da4ef76955cae57c93ae840284&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dmule-plugin-spec2-1.0.0-icon.svg\\\",\\\"md5\\\":\\\"4e66d7d9944fae99cd10d802a9c02207\\\",\\\"sha1\\\":\\\"00b2b3da2a1a886eeefc4d5fa5d8f049cef4e7e8\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:43.037Z\\\",\\\"mainFile\\\":null,\\\"isGenerated\\\":false},{\\\"classifier\\\":null,\\\"packaging\\\":\\\"pom\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/mule-plugin-spec2\\/1.0.0\\/pom\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/c58df4a1b8b0ffa5507a70e00009e66a7d64fdb25d049173a9387ad4575e32fb.pom?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=e24fd92e42735a07ed1d6ac6d2cec8d3945bdcf29b58a90c27ffb7abdb719220&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dmule-plugin-spec2-1.0.0.pom\\\",\\\"md5\\\":\\\"f96bbb907b26f4d434a0e74d18d401f3\\\",\\\"sha1\\\":\\\"1462bbfa94e1412e71ff245274d0be02d95eb89b\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:43.658Z\\\",\\\"mainFile\\\":null,\\\"isGenerated\\\":false}]},{\\\"groupId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"assetId\\\":\\\"mule-module-spec2\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"versionGroup\\\":\\\"1.0.0\\\",\\\"name\\\":\\\"Spec2 Connector\\\",\\\"type\\\":\\\"connector\\\",\\\"minMuleVersion\\\":\\\"3.6.0\\\",\\\"files\\\":[{\\\"classifier\\\":null,\\\"packaging\\\":\\\"jar\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/mule-module-spec2\\/1.0.0\\/jar\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/2d6054576c28531cb02552ff33e2ae12e92a5155ec8bf3ccfed3603549a898ef.jar?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=e5bf28af7ddab237d6642fbe76eaf1e4696fa21c84ca1f4633da05d57c387151&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dmule-module-spec2-1.0.0.jar\\\",\\\"md5\\\":\\\"9431bcd36405350c4cf6e0fb1561ddd7\\\",\\\"sha1\\\":\\\"18ef9115b33f92b5047fcb9166afb806b02a7901\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:55.122Z\\\",\\\"mainFile\\\":null,\\\"isGenerated\\\":false},{\\\"classifier\\\":null,\\\"packaging\\\":\\\"pom\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/mule-module-spec2\\/1.0.0\\/pom\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/6e9ed5562e6b2adb34dc3368dc6d272bfba049649bab58ac07b6d50176e81cab.pom?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=eb5828744dd468ead594b8a84526f14274bd38d3e9874cd396f9ac8fd7027cdf&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dmule-module-spec2-1.0.0.pom\\\",\\\"md5\\\":\\\"0295b5a5aed8649ae198c2846882fcc5\\\",\\\"sha1\\\":\\\"f5c3fd6f0ebc7058855efb535810db92687c2719\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:55.507Z\\\",\\\"mainFile\\\":null,\\\"isGenerated\\\":false},{\\\"classifier\\\":\\\"studio-plugin\\\",\\\"packaging\\\":\\\"zip\\\",\\\"downloadURL\\\":\\\"https:\\/\\/anypoint.mulesoft.com\\/exchange\\/files\\/api\\/v1\\/organizations\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/assets\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/mule-module-spec2\\/1.0.0\\/studio-plugin\\/zip\\\",\\\"externalLink\\\":\\\"https:\\/\\/exchange2-asset-manager-kprod.s3.amazonaws.com\\/13fc4e64-2c88-4860-ba09-9c24f52369fe\\/f3fec4ff3809994d2db1f682357bb9eef4c4deb98c5bc96c665092ace826dcba.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAVQT2Q7OAOZB32MVW%2F20210607%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210607T235818Z&X-Amz-Expires=86400&X-Amz-Security-Token=FwoGZXIvYXdzEMH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDBAPm8JhJmfrAqaTwCLIAb83%2F%2BUd4H15sOX9%2BzxtYdF8usy3LIX8Tj%2F2rNnrmno7ITPWx3vsmzW%2B1Tqy17zbvAaTjchG1pqb5ckJ0Z7kk9haNzbfozUm4A4dm%2BJfabDHsNBdiqwC0JmxtbABol%2BfdDJY%2FrEt7kpE8H3tu%2FEvOQ1Yv0Jmny8TxEjxCz%2BVDcO4G3vUpIZE3TzPOm7Iq2jbAkicBJdhGq4ZtDjH%2FbAKt4iK4VgQtGy3S9WPM3mzQ2mxsiD6QB9C481TRf6bcX3mIipKcCWK7xY5KIHc%2BoUGMi3mByTIi4shCiwcyRjB6eC65sInOO4%2BfArW3KdOImDQdswe8d0hv0oaSMvWBtg%3D&X-Amz-Signature=09bcff597a63317a81dca79dd84f259b127193a9bb064bbefe7cfaa6b17e254a&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dmule-module-spec2-1.0.0-studio-plugin.zip\\\",\\\"md5\\\":\\\"2dea2fbe056a81d3c8d780719ec5388b\\\",\\\"sha1\\\":\\\"9543f54d4eeb7cb99720c2d20253a9f46fab5d92\\\",\\\"createdDate\\\":\\\"2021-06-07T16:23:57.012Z\\\",\\\"mainFile\\\":null,\\\"isGenerated\\\":false}]}],\\\"otherVersions\\\":[],\\\"id\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\/spec2\\/1.0.0\\\",\\\"icon\\\":null,\\\"createdAt\\\":\\\"2021-06-07T16:23:40.912Z\\\",\\\"modifiedAt\\\":\\\"2021-06-07T16:23:39.965Z\\\",\\\"organization\\\":{\\\"id\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"name\\\":\\\"Test Org\\\",\\\"parentOrganizationIds\\\":[\\\"51144150-1eaf-406d-aea8-9869ca185036\\\"],\\\"subOrganizationIds\\\":[],\\\"tenantOrganizationIds\\\":[],\\\"isMaster\\\":false,\\\"domain\\\":\\\"bolt-apis\\\",\\\"isMulesoftOrganization\\\":false},\\\"permissions\\\":[\\\"admin\\\",\\\"edit\\\"]}]}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="environments" format="json">
+      <types:shape format="weave" example="examples/environments.json"><![CDATA[%dw 2.0
+
+type environments = {|
+  data: Array<{|    id: String,     name: String,     organizationId: String,     isProduction: Boolean,     "type": String,     clientId: String  |}>, 
+  total: Number {"typeId": "int"}
+|} {"example": "{\\\"data\\\":[{\\\"id\\\":\\\"e30b418f-e0db-4d16-a7a3-f7c95f96a45e\\\",\\\"name\\\":\\\"Design\\\",\\\"organizationId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"isProduction\\\":false,\\\"type\\\":\\\"design\\\",\\\"clientId\\\":\\\"b53a996b3e2a4f01b4901c0a5d93c534\\\"},{\\\"id\\\":\\\"b8aee78e-997e-424f-b9a9-185081ff8006\\\",\\\"name\\\":\\\"Sandbox\\\",\\\"organizationId\\\":\\\"13fc4e64-2c88-4860-ba09-9c24f52369fe\\\",\\\"isProduction\\\":false,\\\"type\\\":\\\"sandbox\\\",\\\"clientId\\\":\\\"93e5515be98644feb76e3c22d369e740\\\"}],\\\"total\\\":2}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="string" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+    <types:type name="array-list" format="java">
+      <types:shape format="java" element="java.util.ArrayList"/>
+    </types:type>
+    <types:type name="transaction" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: object
+properties:
+    transactionId:]]></types:shape>
+    </types:type>
+    <types:type name="delete-info" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: object
+properties:
+      organizationName:
+      callback?:
+        properties:
+          slackUser?:
+          email?:
+  ]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#dfd70002-1518-4f59-8f5b-34ee5e523713">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="org-info"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#bd68860e-6c15-4399-932d-4c3544e4edce">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="org-assets"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#909fedff-f124-480f-afbd-b24d1fd481e4">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:attributes type="asset-status"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#9bfe60b4-80da-490b-888e-b6f0b33681f9">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:variables>
+          <types:variable name="assetStatusList" type="asset-status[]"/>
+        </types:variables>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#c880e728-40eb-485e-b914-24c4fe2580eb">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="environments"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#e3d1f42d-db65-4f72-98a3-c1b81526c3d6">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:variables>
+          <types:variable name="organizationId" type="string"/>
+          <types:variable name="authorizationToken" type="string"/>
+        </types:variables>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#150507e0-0622-4664-a44e-4b2d7a114a38">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:variables>
+          <types:variable name="organizationId" type="string"/>
+          <types:variable name="authorizationToken" type="string"/>
+          <types:variable name="deleteInfo" type="delete-info"/>
+        </types:variables>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#ed532d6d-f2ba-4e21-b408-a973e9ebdd20">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:variables>
+          <types:variable name="organizationId" type="string"/>
+          <types:variable name="authorizationToken" type="string"/>
+          <types:variable name="assetStatusList" type="asset-status[]"/>
+        </types:variables>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#160bd516-413b-469e-ac55-722e114b02c5">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:variables>
+          <types:variable name="organizationId" type="string"/>
+          <types:variable name="authorizationToken" type="string"/>
+          <types:variable name="assetStatusList" type="asset-status[]"/>
+        </types:variables>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#2017281c-f587-499d-a568-f431b602f66a">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:variables>
+          <types:variable name="assetStatusList" type="asset-status[]"/>
+        </types:variables>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#2da9563e-38b1-40f3-a3cc-00737b660493">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:variables>
+          <types:variable name="organizationId" type="string"/>
+          <types:variable name="assetStatusList" type="asset-status[]"/>
+        </types:variables>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#0414055a-2600-4455-a4f4-4c66e26127eb">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:variables>
+          <types:variable name="assetStatusList" type="asset-status[]"/>
+        </types:variables>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#dad5d821-c9f4-4a97-a081-dfa9f92c596d">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="transaction"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#ae7d0324-68a5-4aef-9ac8-7bb506578c65">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:variables>
+          <types:variable name="transactionId" type="string"/>
+        </types:variables>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#fce4aa63-8687-48fb-a556-7af84e956384">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:variables>
+          <types:variable name="assetStatusList" type="asset-status[]"/>
+        </types:variables>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#dc881985-4787-4125-af0a-3501459878cc">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="delete-info"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:variables>
+          <types:variable name="deleteInfo" type="delete-info"/>
+          <types:variable name="assetStatusList" type="asset-status[]"/>
+        </types:variables>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
